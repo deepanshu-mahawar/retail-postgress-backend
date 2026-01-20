@@ -83,7 +83,6 @@ export const signup = async (req: Request, res: Response) => {
   }
 };
 
-
 // export const verifyOtp = async (req: Request, res: Response) => {
 //   try {
 //     const { email, otp } = req.body;
@@ -129,11 +128,7 @@ export const verifyOtp = async (req: Request, res: Response) => {
     console.log("⏰ OTP Expiry:", user.otpExpiry);
     console.log("⏳ Current Time:", new Date());
 
-    if (
-      user.otp !== otp ||
-      !user.otpExpiry ||
-      user.otpExpiry < new Date()
-    ) {
+    if (user.otp !== otp || !user.otpExpiry || user.otpExpiry < new Date()) {
       console.log("⚠️ Invalid or expired OTP");
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
@@ -154,7 +149,6 @@ export const verifyOtp = async (req: Request, res: Response) => {
     res.status(500).json({ message: "OTP verification failed" });
   }
 };
-
 
 // export const signin = async (req: Request, res: Response) => {
 //   try {
@@ -209,11 +203,9 @@ export const signin = async (req: Request, res: Response) => {
     }
 
     console.log("🔑 Generating JWT token...");
-    const token = jwt.sign(
-      { id: user.id },
-      process.env.JWT_SECRET!,
-      { expiresIn: "7d" }
-    );
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, {
+      expiresIn: "7d",
+    });
 
     console.log("✅ Signin successful for user:", user.id);
     res.json({ token });
@@ -221,4 +213,9 @@ export const signin = async (req: Request, res: Response) => {
     console.error("❌ Signin failed:", error);
     res.status(500).json({ message: "Signin failed" });
   }
+};
+
+export const me = async (req: Request, res: Response) => {
+  try {
+  } catch (error) {}
 };
