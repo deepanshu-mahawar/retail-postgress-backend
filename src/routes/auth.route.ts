@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { signup, signin, verifyOtp, getUserProfile } from "../controllers/auth.controller";
+import {
+  signup,
+  signin,
+  verifyOtp,
+  getUserProfile,
+} from "../controllers/auth.controller";
 import { authMiddleware } from "../middleware/auth";
 
 const router = Router();

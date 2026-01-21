@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Product } from "./Product";
 
 @Entity()
 export class User {
@@ -30,4 +32,7 @@ export class User {
 
   @CreateDateColumn()
   createdAt!: Date;
+
+  @OneToMany(() => Product, (product) => product.user)
+  products!: Product[];
 }
