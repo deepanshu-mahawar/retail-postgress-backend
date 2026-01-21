@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { AuthRequest } from "../middleware/auth";
 import path from "path";
 import fs from "fs";
@@ -7,7 +7,7 @@ import { Product } from "../entity/Product";
 
 const productRepo = AppDataSource.getRepository(Product);
 
-export const addProduct = async (req: AuthRequest, res: Response) => {
+export const addProducts = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.userId?.toString();
     if (!userId) {
@@ -52,5 +52,29 @@ export const addProduct = async (req: AuthRequest, res: Response) => {
     return res
       .status(500)
       .json({ message: "Error creating product", success: true });
+  }
+};
+
+export const getProducts = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.userId?.toString();
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const products = await productRepo.find({
+      where: { id: userId },
+      order: { createdAt: "DESC" },
+    });
+
+    return res.status(200).json({
+      message: "Products fetched successfully",
+      success: true,
+      data: products,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error fetching products", success: true });
   }
 };
