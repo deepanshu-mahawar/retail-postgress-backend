@@ -68,7 +68,6 @@ export const addProducts = async (req: AuthRequest, res: Response) => {
 export const getProducts = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.userId?.toString();
-    console.log("User ID:", userId);
     if (!userId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
@@ -77,7 +76,6 @@ export const getProducts = async (req: AuthRequest, res: Response) => {
       where: { userId: userId },
       order: { createdAt: "DESC" },
     });
-    console.log("Fetched Products:", products);
 
     return res.status(200).json({
       message: "Products fetched successfully",
